@@ -1,7 +1,41 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const cron = require('node-cron');
+
+const { Gpio } = require("rpi-ws281x-native");
 const PORT = 4200;
+
+const NUM_LEDS = 144;
+const LED_PIN = 18;
+const leds = new Uint32Array(NUM_LEDS);
+const LEDS_PER_FIELD = 6;
+
+
+const ws281x = require("rpi-ws281x-native");
+ws281x.init({ count: NUM_LEDS, gpio: LED_PIN });
+
+const STATUS_COLORS = {
+	locked: 0xff0000,
+	available: 0xffa500,
+	solved: 0x00ff00
+};
+
+function updateLeds() {
+	const status = loadRiddleStatus();
+
+	leds.fill(0);
+
+	Object.entries(status).forEach(([day, { status }], index) => {
+		const startIdx = index * LEDS_PER_FIELD;
+		const color = STATUS_COLORS[status] || 0x000000;
+		for (let i = startIdx; i < startIdx + LEDS_PER_FIELD; i++) {
+			leds[i] = color;
+		}
+	});
+
+	ws281x.render(leds);
+}
 
 app.use(express.static('public'));
 
@@ -11,6 +45,7 @@ const loadRiddleStatus = () => {
 };
 
 const saveRiddleStatus = (status) => {
+	updateLeds();
 	fs.writeFileSync('riddleStatus.json', JSON.stringify(status), 'utf-8');
 };
 
@@ -69,6 +104,10 @@ app.get('/riddle/:dayId', (req, res) => {
 	} else {
 		res.redirect('/');
 	}
+});
+
+cron.schedule('* * * * * *', () => {
+	updateLeds();
 });
 
 app.listen(PORT, () => {
