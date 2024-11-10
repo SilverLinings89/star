@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Christmas Wordle Game</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background: #1b3d23 url('https://www.transparenttextures.com/patterns/grey-sandbag.png');
+			/* Subtle snowy texture */
+			color: #fff;
+			margin: 0;
+		}
+
+		.game-container {
+			text-align: center;
+		}
+
+		h1 {
+			color: #d32f2f;
+			font-size: 2.5em;
+			margin: 0;
+			font-family: 'Merry Christmas', cursive;
+		}
+
+		.row {
+			display: flex;
+			justify-content: center;
+			margin: 5px 0;
+		}
+
+		.cell {
+			width: 50px;
+			height: 50px;
+			border: 2px solid #5e5e5f;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			text-transform: uppercase;
+			margin: 2px;
+			color: #fff;
+			font-weight: bold;
+			background-color: #283618;
+		}
+
+		.correct {
+			background-color: #4caf50;
+			/* green */
+		}
+
+		.present {
+			background-color: #ffeb3b;
+			/* yellow */
+			color: #333;
+		}
+
+		.absent {
+			background-color: #5e5e5f;
+			/* gray */
+		}
+
+		.message {
+			margin-top: 20px;
+			font-size: 18px;
+		}
+
+		input[type="text"] {
+			width: 250px;
+			padding: 8px;
+			font-size: 16px;
+			margin-top: 15px;
+		}
+
+		button {
+			padding: 10px 20px;
+			font-size: 16px;
+			margin-top: 10px;
+			cursor: pointer;
+			background-color: #d32f2f;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+		}
+
+		.keyboard {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			max-width: 600px;
+			margin: 20px auto;
+		}
+
+		.key {
+			width: 40px;
+			height: 40px;
+			margin: 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #5e5e5f;
+			border-radius: 5px;
+			font-size: 16px;
+			color: #fff;
+			cursor: default;
+			font-weight: bold;
+		}
+
+		.key.correct {
+			background-color: #4caf50;
+		}
+
+		.key.present {
+			background-color: #ffeb3b;
+			color: #333;
+		}
+
+		.key.absent {
+			background-color: #5e5e5f;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="game-container">
+		<h1>🎄 Christmas Wordle 🎄</h1>
+		<div id="grid"></div>
+		<input type="text" id="guessInput" maxlength="5" placeholder="Enter a 5-letter word">
+		<button onclick="makeGuess()">Submit</button>
+		<div id="message" class="message"></div>
+		<div id="keyboard" class="keyboard"></div>
+	</div>
+
+	<script>
+		const solution = "apple"; // Set the correct solution word
+		const maxAttempts = 6;
+		let attempts = 0;
+
+		const grid = document.getElementById('grid');
+		const keyboard = document.getElementById('keyboard');
+		const letters = "abcdefghijklmnopqrstuvwxyz";
+
+		const keyStatus = {}; // Track the status of each letter
+
+		// Initialize keyStatus with each letter having no status
+		letters.split('').forEach(letter => {
+			keyStatus[letter] = '';
+		});
+
+		// Generate the game grid
+		for (let i = 0; i < maxAttempts; i++) {
+			const row = document.createElement('div');
+			row.className = 'row';
+			for (let j = 0; j < 5; j++) {
+				const cell = document.createElement('div');
+				cell.className = 'cell';
+				cell.id = `cell-${i}-${j}`;
+				row.appendChild(cell);
+			}
+			grid.appendChild(row);
+		}
+
+		// Generate the on-screen keyboard
+		letters.split('').forEach(letter => {
+			const key = document.createElement('div');
+			key.className = 'key';
+			key.id = `key-${letter}`;
+			key.textContent = letter.toUpperCase();
+			keyboard.appendChild(key);
+		});
+
+		function makeGuess() {
+			const guessInput = document.getElementById('guessInput');
+			const guess = guessInput.value.toLowerCase();
+
+			if (guess.length !== 5) {
+				showMessage("Please enter a 5-letter word.");
+				return;
+			}
+
+			if (attempts >= maxAttempts) {
+				showMessage("No more attempts left!");
+				return;
+			}
+
+			for (let i = 0; i < 5; i++) {
+				const cell = document.getElementById(`cell-${attempts}-${i}`);
+				const letter = guess[i];
+				cell.textContent = letter;
+
+				if (letter === solution[i]) {
+					cell.classList.add('correct');
+					keyStatus[letter] = 'correct';
+				} else if (solution.includes(letter)) {
+					cell.classList.add('present');
+					if (keyStatus[letter] !== 'correct') keyStatus[letter] = 'present';
+				} else {
+					cell.classList.add('absent');
+					keyStatus[letter] = 'absent';
+				}
+			}
+
+			updateKeyboard();
+
+			if (guess === solution) {
+				showMessage("Congratulations! You guessed the word!");
+				disableInput();
+			} else {
+				attempts++;
+				if (attempts >= maxAttempts) {
+					showMessage(`Game over! The word was "${solution}".`);
+					disableInput();
+				} else {
+					showMessage(`Attempt ${attempts} of ${maxAttempts}`);
+				}
+			}
+
+			guessInput.value = '';
+		}
+
+		function showMessage(msg) {
+			const messageElement = document.getElementById('message');
+			messageElement.textContent = msg;
+		}
+
+		function disableInput() {
+			document.getElementById('guessInput').disabled = true;
+			document.querySelector('button').disabled = true;
+		}
+
+		function updateKeyboard() {
+			Object.keys(keyStatus).forEach(letter => {
+				const key = document.getElementById(`key-${letter}`);
+				key.className = 'key ' + keyStatus[letter];
+			});
+		}
+	</script>
+</body>
+
+</html>

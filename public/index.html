@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hannas Adventskalender</title>
+	<style>
+		body {
+			background-color: #1a1a3d;
+			font-family: Arial, sans-serif;
+			color: #fff;
+			text-align: center;
+		}
+
+		.calendar-container {
+			padding: 20px;
+			max-width: 600px;
+			margin: auto;
+		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			gap: 10px;
+			margin-top: 20px;
+		}
+
+		.day-box {
+			width: 60px;
+			height: 60px;
+			background-color: #2d2d5e;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: transform 0.2s;
+		}
+
+		.day-box:hover {
+			transform: scale(1.1);
+		}
+
+		.locked {
+			background-color: #333;
+			cursor: not-allowed;
+		}
+
+		.attempted {
+			background-color: #ffc107;
+		}
+
+		.solved {
+			background-color: #28a745;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="calendar-container">
+		<h1>🎄 Adventskalender f&uuml;r meinen Schatz 🎄</h1>
+		<div class="grid-container">
+			<div id="day-1" class="day-box locked" data-day="1">1</div>
+			<div id="day-2" class="day-box locked" data-day="2">2</div>
+			<div id="day-3" class="day-box locked" data-day="3">3</div>
+			<div id="day-4" class="day-box locked" data-day="4">4</div>
+			<div id="day-5" class="day-box locked" data-day="5">5</div>
+			<div id="day-6" class="day-box locked" data-day="6">6</div>
+			<div id="day-7" class="day-box locked" data-day="7">7</div>
+			<div id="day-8" class="day-box locked" data-day="8">8</div>
+			<div id="day-9" class="day-box locked" data-day="9">9</div>
+			<div id="day-10" class="day-box locked" data-day="10">10</div>
+			<div id="day-11" class="day-box locked" data-day="11">11</div>
+			<div id="day-12" class="day-box locked" data-day="12">12</div>
+			<div id="day-13" class="day-box locked" data-day="13">13</div>
+			<div id="day-14" class="day-box locked" data-day="14">14</div>
+			<div id="day-15" class="day-box locked" data-day="15">15</div>
+			<div id="day-16" class="day-box locked" data-day="16">16</div>
+			<div id="day-17" class="day-box locked" data-day="17">17</div>
+			<div id="day-18" class="day-box locked" data-day="18">18</div>
+			<div id="day-19" class="day-box locked" data-day="19">19</div>
+			<div id="day-20" class="day-box locked" data-day="20">20</div>
+			<div id="day-21" class="day-box locked" data-day="21">21</div>
+			<div id="day-22" class="day-box locked" data-day="22">22</div>
+			<div id="day-23" class="day-box locked" data-day="23">23</div>
+			<div id="day-24" class="day-box locked" data-day="24">24</div>
+		</div>
+	</div>
+	<script>
+		document.addEventListener("DOMContentLoaded", async () => {
+			const calendar = document.querySelectorAll(".day-box");
+
+			// Fetch the riddle status from the server
+			const response = await fetch('/api/riddle-status');
+			const riddleStatus = await response.json(); // { "1": "available", "2": "solved", etc. }
+
+			// Iterate through each day and apply the correct class based on its status
+			calendar.forEach(dayBox => {
+				const day = dayBox.getAttribute("data-day");
+
+				if (riddleStatus[day] === "locked") {
+					dayBox.classList.add("locked");
+				} else if (riddleStatus[day] === "available") {
+					dayBox.classList.remove("locked");
+					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
+				} else if (riddleStatus[day] === "attempted") {
+					dayBox.classList.add("attempted");
+					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
+				} else if (riddleStatus[day] === "solved") {
+					dayBox.classList.add("solved");
+					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
