@@ -3,6 +3,8 @@ const fs = require('fs');
 const app = express();
 const cron = require('node-cron');
 
+// Valid states for a riddle: locked, available, done
+
 const { Gpio } = require("rpi-ws281x-native");
 const PORT = 4200;
 
@@ -44,9 +46,22 @@ const loadRiddleStatus = () => {
 	return JSON.parse(data);
 };
 
+const loadRiddles = () => {
+	const data = fs.readFileSync('riddles.json', 'utf-8');
+	return JSON.parse(data);
+};
+
 const saveRiddleStatus = (status) => {
 	updateLeds();
 	fs.writeFileSync('riddleStatus.json', JSON.stringify(status), 'utf-8');
+};
+
+const solve_riddle = (day) => {
+	const status = loadRiddleStatus();
+	if (status[day].status === "available") {
+		status[day].status = "done";
+	}
+	saveRiddleStatus(status);
 };
 
 const unlockDailyRiddles = () => {
@@ -68,7 +83,6 @@ const unlockDailyRiddles = () => {
 app.get('/api/riddle-status', (_, res) => {
 	const status = unlockDailyRiddles();
 	const today = new Date().getDate();
-
 	const filteredStatus = Object.keys(status).reduce((result, day) => {
 		if (parseInt(day) <= today && status[day].status === "available") {
 			result[day] = { status: "available", url: status[day].url };
@@ -81,18 +95,19 @@ app.get('/api/riddle-status', (_, res) => {
 	res.json(filteredStatus);
 });
 
-app.post('/api/update-riddle/:day/:status', (req, res) => {
-	const day = req.params.day;
-	const newStatus = req.params.status;
-
-	const status = loadRiddleStatus();
-	if (status[day]) {
-		status[day].status = newStatus;
-		saveRiddleStatus(status);
-		res.json({ message: 'Status updated', status });
-	} else {
-		res.status(404).json({ message: 'Riddle not found' });
+app.post('/api/solution', (req, res) => {
+	const body = req.body;
+	const id = body.id;
+	const solution = body.solution;
+	const riddles = loadRiddles();
+	let success = false;
+	for (let r in riddles) {
+		if (r.id == id && r.solution == solution) {
+			success = true;
+			solve_riddle(r.day);
+		}
 	}
+	res.json({ success });
 });
 
 app.get('/riddle/:dayId', (req, res) => {

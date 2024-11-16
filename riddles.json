@@ -3,144 +3,168 @@
     "id": "li34h09hoiehr",
     "name": "1. Dezember",
     "description": "JS is weird!",
-    "solution": "banana"
+    "solution": "banana",
+    "day": 1
   },
   {
     "id": "f4n9ui4thsjh4tu",
     "name": "2. Dezember",
     "description": "Ein deutsches Wordle",
-    "solution": "Schatz"
+    "solution": "Schatz",
+    "day": 2
   },
   {
     "id": "lwuh2397h23r29",
     "name": "3. Dezember",
     "description": "Ein kleines Schach Raetsel",
-    "solution": "re8#"
+    "solution": "re8#",
+    "day": 3
   },
   {
     "id": "o34igjj3409fj",
     "name": "4. Dezember",
     "description": "2048",
-    "solution": "success"
+    "solution": "",
+    "day": 4
   },
   {
     "id": "239j32lirj32r",
     "name": "5. Dezember",
     "description": "Ein Kreuzwortraetsel",
-    "solution": "SPATAG"
+    "solution": "SPATAG",
+    "day": 5
   },
   {
     "id": "pijerf3408i43",
     "name": "6. Dezember",
     "description": "",
-    "solution": ""
+    "solution": "starting",
+    "day": 6
   },
   {
     "id": "owi4jt0whe",
     "name": "7. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "2048",
+    "solution": "2048",
+    "day": 7
   },
   {
     "id": "oiuh0934ih4gr",
     "name": "8. Dezember",
     "description": "",
-    "solution": ""
+    "solution": "NOON",
+    "day": 8
   },
   {
     "id": "alfi8j034hf",
     "name": "9. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "Who doesn't belong?",
+    "solution": "courts",
+    "day": 9
   },
   {
     "id": "fwi4lhr38sdf",
     "name": "10. Dezember",
     "description": "Ein etwas schwereres Schachproblem ...",
-    "solution": "Qe7+Kg8Qe8+Re8Re8#"
+    "solution": "Qe7+Kg8Qe8+Re8Re8#",
+    "day": 10
   },
   {
     "id": "f43f4ilu34hf7",
     "name": "11. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "4096",
+    "solution": "4096",
+    "day": 11
   },
   {
     "id": "ff3434lklp09ik",
     "name": "12. Dezember",
     "description": "Crossword reloaded",
-    "solution": "Snackbar"
+    "solution": "Snackbar",
+    "day": 12
   },
   {
     "id": "kjhkjhgkjg87gj",
     "name": "13. Dezember",
     "description": "Ein englisches Wordle",
-    "solution": "hearts"
+    "solution": "hearts",
+    "day": 13
   },
   {
     "id": "f34hop34hfpkji",
     "name": "14. Dezember",
     "description": "What occurs once in a minute, twice in a moment and never in 1000 years?",
-    "solution": "m"
+    "solution": "m",
+    "day": 14
   },
   {
     "id": "bmbnv2m34nbv",
     "name": "15. Dezember",
     "description": "",
-    "solution": ""
+    "solution": "alphabet",
+    "day": 15
   },
   {
     "id": "poihuj09u8ih7tg",
     "name": "16. Dezember",
     "description": "",
-    "solution": ""
+    "solution": "ton",
+    "day": 16
   },
   {
     "id": "qewarestqwx365",
     "name": "17. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "Sudoku medium",
+    "solution": "",
+    "day": 17
   },
   {
     "id": "29823igubkjfwe",
     "name": "18. Dezember",
     "description": "",
-    "solution": ""
+    "solution": "mushroom",
+    "day": 18
   },
   {
     "id": "23lkfiug23r78ogu",
     "name": "19. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "crossword",
+    "solution": "",
+    "day": 19
   },
   {
     "id": "f24asasd23wdcsd",
     "name": "20. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "8192",
+    "solution": "8192",
+    "day": 20
   },
   {
     "id": "poiujhnk90987yt",
     "name": "21. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "Sudoku hard",
+    "solution": "",
+    "day": 21
   },
   {
     "id": "f23454rtfdbfg",
     "name": "22. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "deutsches Wordle",
+    "solution": "advent",
+    "day": 22
   },
   {
     "id": "kjgsdkfhgmn3b",
     "name": "23. Dezember",
-    "description": "",
-    "solution": ""
+    "description": "chess hard",
+    "solution": "",
+    "day": 23
   },
   {
     "id": "fsew47iughjk",
     "name": "24. Dezember",
-    "description": "",
-    "solution": ""
-  },
+    "description": "poem caesar",
+    "solution": "",
+    "day": 24
+  }
 ]
