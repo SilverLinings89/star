@@ -39,6 +39,7 @@ function updateLeds() {
 	ws281x.render(leds);
 }
 
+app.use(express.json());
 app.use(express.static('public'));
 
 const loadRiddleStatus = () => {
@@ -96,6 +97,7 @@ app.get('/api/riddle-status', (_, res) => {
 });
 
 app.post('/api/solution', (req, res) => {
+	console.log(req.body);
 	const body = req.body;
 	const id = body.id;
 	const solution = body.solution;

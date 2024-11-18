@@ -10,6 +10,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.1",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "node-cron": "^3.0.3",
+    "rpi-ws281x-native": "^1.0.4"
   }
 }
