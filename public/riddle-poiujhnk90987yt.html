@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sudoku Solver</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 0;
+			height: 100vh;
+			background-color: #f9f9f9;
+		}
+
+		table {
+			border-collapse: collapse;
+			margin: 20px 0;
+		}
+
+		td {
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			border: 1px solid #000;
+		}
+
+		input {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			border: none;
+			font-size: 18px;
+		}
+
+		input:focus {
+			outline: none;
+		}
+
+		button {
+			margin-top: 20px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			border-radius: 5px;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>{{QUESTION}}</h1>
+	<table>
+		<tbody>
+			<script>
+				for (let row = 0; row < 9; row++) {
+					document.write('<tr>');
+					for (let col = 0; col < 9; col++) {
+						document.write('<td><input type="text" maxlength="1" /></td>');
+					}
+					document.write('</tr>');
+				}
+			</script>
+		</tbody>
+	</table>
+	<button id="submit">Submit Solution</button>
+	<script>
+		function set_val(r, c, v) {
+			document.querySelectorAll('tr').forEach((row, rowIndex) => {
+				row.querySelectorAll('input').forEach((cell, cellIndex) => {
+					if (rowIndex == r || cellIndex == c) {
+						cell.value = v;
+					}
+				});
+			});
+		}
+
+		var initial_values = "172.643858541736296.3825741.8.4162972.6...13871.38.45642759.......64...........14";
+		var initial_values = "5.2.6...768..57.2991728...6.5.6.37121768.2..52..571...7.193.2....542..71.2.7.....";
+		var initial_values = "..9.6....36...97.4.1483..96....9.4..4.6..3..5..........4.3..6.993...6...625971348";
+		for (var row = 0; row < 9; row++) {
+			for (var col = 0; col < 9; col++) {
+				var val = initial_values[9 * row + col];
+				if (val != ".") {
+					set_val(row, col, val);
+				}
+			}
+		}
+
+		document.getElementById('submit').addEventListener('click', () => {
+			const grid = [];
+			document.querySelectorAll('tr').forEach((row, rowIndex) => {
+				grid[rowIndex] = [];
+				row.querySelectorAll('input').forEach((cell) => {
+					grid[rowIndex].push(cell.value.trim() || '.');
+				});
+			});
+
+			fetch('https://example.com/submit', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({solvedGrid: grid}),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					alert('Sudoku submitted successfully!');
+					console.log(data);
+				})
+				.catch((error) => {
+					alert('Error submitting Sudoku.');
+					console.error(error);
+				});
+		});
+	</script>
+</body>
+
+</html>

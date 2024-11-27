@@ -12,7 +12,7 @@
     "name": "2. Dezember",
     "description": "Ein deutsches Wordle",
     "solution": "schatz",
-    "type": "worlde",
+    "type": "wordle",
     "day": 2
   },
   {
@@ -172,7 +172,7 @@
     "name": "22. Dezember",
     "description": "Ein deutsches Wordle",
     "solution": "advent",
-    "type": "worlde",
+    "type": "wordle",
     "day": 22
   },
   {
