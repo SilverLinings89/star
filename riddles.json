@@ -2,15 +2,17 @@
   {
     "id": "li34h09hoiehr",
     "name": "1. Dezember",
-    "description": "JS is weird!",
+    "description": "JS is weird! ('b' + 'a' + + 'a' + 'a').toLowerCase()",
     "solution": "banana",
+    "type": "riddle",
     "day": 1
   },
   {
     "id": "f4n9ui4thsjh4tu",
     "name": "2. Dezember",
     "description": "Ein deutsches Wordle",
-    "solution": "Schatz",
+    "solution": "schatz",
+    "type": "worlde",
     "day": 2
   },
   {
@@ -18,27 +20,31 @@
     "name": "3. Dezember",
     "description": "Ein kleines Schach Raetsel",
     "solution": "re8#",
+    "type": "chess",
     "day": 3
   },
   {
     "id": "o34igjj3409fj",
     "name": "4. Dezember",
-    "description": "Sphinx Riddle",
-    "solution": "Mensch",
+    "description": "The Sphinx asks: What goes on 4 feet in the morning, two feet in midday and three feet in the evening?",
+    "solution": "human",
+    "type": "riddle",
     "day": 4
   },
   {
     "id": "239j32lirj32r",
     "name": "5. Dezember",
     "description": "Ein Kreuzwortraetsel",
-    "solution": "SPATAG",
+    "solution": "spatag",
+    "type": "crossword",
     "day": 5
   },
   {
     "id": "pijerf3408i43",
     "name": "6. Dezember",
-    "description": "",
+    "description": "The difficult riddles are starting now: The solution is an 8 letter word. You can remove a letter in such a way that the remaining 7 are still a word. You can repeat this until only one letter remains. Example: SING - SIN - IN - I.",
     "solution": "starting",
+    "type": "riddle",
     "day": 6
   },
   {
@@ -46,20 +52,23 @@
     "name": "7. Dezember",
     "description": "2048",
     "solution": "2048",
+    "type": "2048",
     "day": 7
   },
   {
     "id": "oiuh0934ih4gr",
     "name": "8. Dezember",
-    "description": "",
-    "solution": "NOON",
+    "description": "What 4 letter word is the same forward, backwards and upside down?",
+    "solution": "noon",
+    "type": "riddle",
     "day": 8
   },
   {
     "id": "alfi8j034hf",
     "name": "9. Dezember",
-    "description": "Who doesn't belong?",
+    "description": "Who doesn't belong? CORSET, COSTER, SECTOR, ESCORT, COURTS",
     "solution": "courts",
+    "type": "riddle",
     "day": 9
   },
   {
@@ -67,6 +76,7 @@
     "name": "10. Dezember",
     "description": "Ein etwas schwereres Schachproblem ...",
     "solution": "Qe7+Kg8Qe8+Re8Re8#",
+    "type": "chess",
     "day": 10
   },
   {
@@ -74,13 +84,15 @@
     "name": "11. Dezember",
     "description": "4096",
     "solution": "4096",
+    "type": "2048",
     "day": 11
   },
   {
     "id": "ff3434lklp09ik",
     "name": "12. Dezember",
-    "description": "Crossword reloaded",
-    "solution": "Snackbar",
+    "description": "Sudoku easy",
+    "solution": "172964385854173629693825741385416297246759138719382456427591863531648972968237514",
+    "type": "sudoku",
     "day": 12
   },
   {
@@ -88,6 +100,7 @@
     "name": "13. Dezember",
     "description": "Ein englisches Wordle",
     "solution": "hearts",
+    "type": "wordle",
     "day": 13
   },
   {
@@ -95,34 +108,39 @@
     "name": "14. Dezember",
     "description": "What occurs once in a minute, twice in a moment and never in 1000 years?",
     "solution": "m",
+    "type": "riddle",
     "day": 14
   },
   {
     "id": "bmbnv2m34nbv",
     "name": "15. Dezember",
-    "description": "",
+    "description": "What 8 letter word contains all 24 letters?",
     "solution": "alphabet",
+    "type": "riddle",
     "day": 15
   },
   {
     "id": "poihuj09u8ih7tg",
     "name": "16. Dezember",
-    "description": "",
+    "description": "Forward I'm heavy, backward I'm not.",
     "solution": "ton",
+    "type": "riddle",
     "day": 16
   },
   {
     "id": "qewarestqwx365",
     "name": "17. Dezember",
     "description": "Sudoku medium",
-    "solution": "",
+    "solution": "532169487684357129917284536458693712176842395293571864741936258365428971829715643",
+    "type": "sudoku",
     "day": 17
   },
   {
     "id": "29823igubkjfwe",
     "name": "18. Dezember",
-    "description": "",
+    "description": "What room has no door?",
     "solution": "mushroom",
+    "type": "riddle",
     "day": 18
   },
   {
@@ -130,6 +148,7 @@
     "name": "19. Dezember",
     "description": "crossword",
     "solution": "",
+    "type": "crossword",
     "day": 19
   },
   {
@@ -137,20 +156,23 @@
     "name": "20. Dezember",
     "description": "8192",
     "solution": "8192",
+    "type": "2048",
     "day": 20
   },
   {
     "id": "poiujhnk90987yt",
     "name": "21. Dezember",
     "description": "Sudoku hard",
-    "solution": "",
+    "solution": "789264153362159784514837296251698437496713825873542961148325679937486512625971348",
+    "type": "sudoku",
     "day": 21
   },
   {
     "id": "f23454rtfdbfg",
     "name": "22. Dezember",
-    "description": "deutsches Wordle",
+    "description": "Ein deutsches Wordle",
     "solution": "advent",
+    "type": "worlde",
     "day": 22
   },
   {
@@ -158,6 +180,7 @@
     "name": "23. Dezember",
     "description": "chess hard",
     "solution": "",
+    "type": "chess",
     "day": 23
   },
   {
@@ -165,6 +188,7 @@
     "name": "24. Dezember",
     "description": "poem caesar",
     "solution": "",
+    "type": "riddle",
     "day": 24
   }
 ]

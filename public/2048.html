@@ -29,7 +29,6 @@
 					document.getElementById("board").append(tile);
 				}
 			}
-			//create 2 to begin the game
 			setTwo();
 			setTwo();
 
@@ -37,7 +36,7 @@
 
 		function updateTile(tile, num) {
 			tile.innerText = "";
-			tile.classList.value = ""; //clear the classList
+			tile.classList.value = "";
 			tile.classList.add("tile");
 			if (num > 0) {
 				tile.innerText = num.toString();
@@ -71,24 +70,22 @@
 		})
 
 		function filterZero(row) {
-			return row.filter(num => num != 0); //create new array of all nums != 0
+			return row.filter(num => num != 0);
 		}
 
 		function slide(row) {
-			//[0, 2, 2, 2] 
-			row = filterZero(row); //[2, 2, 2]
+			row = filterZero(row);
 			for (let i = 0; i < row.length - 1; i++) {
 				if (row[i] == row[i + 1]) {
 					row[i] *= 2;
 					row[i + 1] = 0;
 					score += row[i];
 				}
-			} //[4, 0, 2]
-			row = filterZero(row); //[4, 2]
-			//add zeroes
+			}
+			row = filterZero(row);
 			while (row.length < columns) {
 				row.push(0);
-			} //[4, 2, 0, 0]
+			}
 			return row;
 		}
 
@@ -212,9 +209,6 @@
 			align-items: center;
 		}
 
-
-		/* colored tiles */
-
 		.x2 {
 			background-color: #eee4da;
 			color: #727371;
@@ -286,6 +280,7 @@
 	<h1>2048</h1>
 	<hr>
 	<h2>Score: <span id="score">0</span></h2>
+	<h2>The goal is {{QUESTION}}</h2>
 	<div id="board">
 	</div>
 </body>
