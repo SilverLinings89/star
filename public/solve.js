@@ -1,5 +1,5 @@
 async function send_solve(solution) {
-    const userAnswer = solution.trim();
+    const userAnswer = solution.trim().toLowerCase();
     const riddleId = window.location.pathname.split('-')[1].split('.')[0];
     if (!userAnswer) {
         feedbackEl.textContent = 'Please enter an answer.';
