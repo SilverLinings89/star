@@ -12,8 +12,7 @@
 			setGame();
 		}
 
-		function setGame() {
-
+		async function setGame() {
 			board = [
 				[0, 0, 0, 0],
 				[0, 0, 0, 0],
@@ -35,12 +34,17 @@
 
 		}
 
-		function updateTile(tile, num) {
+		async function updateTile(tile, num) {
 			tile.innerText = "";
 			tile.classList.value = "";
 			tile.classList.add("tile");
 			if (num > 0) {
 				tile.innerText = num.toString();
+				if (num == 4096){
+					const result = await send_solve("4096");
+					feedbackEl.textContent = 'You did it! Great job!';
+					feedbackEl.style.color = 'green';
+				}
 				if (num <= 4096) {
 					tile.classList.add("x" + num.toString());
 				} else {
@@ -90,7 +94,7 @@
 			return row;
 		}
 
-		function slideLeft() {
+		async function slideLeft() {
 			for (let r = 0; r < rows; r++) {
 				let row = board[r];
 				row = slide(row);
@@ -98,26 +102,26 @@
 				for (let c = 0; c < columns; c++) {
 					let tile = document.getElementById(r.toString() + "-" + c.toString());
 					let num = board[r][c];
-					updateTile(tile, num);
+					await updateTile(tile, num);
 				}
 			}
 		}
 
-		function slideRight() {
+		async function slideRight() {
 			for (let r = 0; r < rows; r++) {
-				let row = board[r];         //[0, 2, 2, 2]
-				row.reverse();              //[2, 2, 2, 0]
-				row = slide(row)            //[4, 2, 0, 0]
-				board[r] = row.reverse();   //[0, 0, 2, 4];
+				let row = board[r];
+				row.reverse(); 
+				row = slide(row);
+				board[r] = row.reverse(); 
 				for (let c = 0; c < columns; c++) {
 					let tile = document.getElementById(r.toString() + "-" + c.toString());
 					let num = board[r][c];
-					updateTile(tile, num);
+					await updateTile(tile, num);
 				}
 			}
 		}
 
-		function slideUp() {
+		async function slideUp() {
 			for (let c = 0; c < columns; c++) {
 				let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
 				row = slide(row);
@@ -125,12 +129,12 @@
 					board[r][c] = row[r];
 					let tile = document.getElementById(r.toString() + "-" + c.toString());
 					let num = board[r][c];
-					updateTile(tile, num);
+					await updateTile(tile, num);
 				}
 			}
 		}
 
-		function slideDown() {
+		async function slideDown() {
 			for (let c = 0; c < columns; c++) {
 				let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
 				row.reverse();
@@ -140,7 +144,7 @@
 					board[r][c] = row[r];
 					let tile = document.getElementById(r.toString() + "-" + c.toString());
 					let num = board[r][c];
-					updateTile(tile, num);
+					await updateTile(tile, num);
 				}
 			}
 		}
@@ -151,7 +155,6 @@
 			}
 			let found = false;
 			while (!found) {
-				//find random row and column to place a 2 in
 				let r = Math.floor(Math.random() * rows);
 				let c = Math.floor(Math.random() * columns);
 				if (board[r][c] == 0) {
@@ -168,7 +171,7 @@
 			let count = 0;
 			for (let r = 0; r < rows; r++) {
 				for (let c = 0; c < columns; c++) {
-					if (board[r][c] == 0) { //at least one zero in the board
+					if (board[r][c] == 0) {
 						return true;
 					}
 				}
@@ -274,6 +277,12 @@
 			background-color: #ff2020;
 			color: white;
 		}
+
+		#feedback {
+			margin-top: 15px;
+			font-size: 18px;
+			font-weight: bold;
+		}
 	</style>
 </head>
 
@@ -281,9 +290,10 @@
 	<h1>2048</h1>
 	<hr>
 	<h2>Score: <span id="score">0</span></h2>
-	<h2>The goal is {{QUESTION}}</h2>
+	<h2>The goal is 4096</h2>
 	<div id="board">
 	</div>
+	<p id="feedback"></p>
 </body>
 
 </html>

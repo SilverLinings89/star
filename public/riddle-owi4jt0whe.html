@@ -40,8 +40,8 @@
 			tile.classList.add("tile");
 			if (num > 0) {
 				tile.innerText = num.toString();
-				if (num == 2048){
-					const result = await send_solve("2048");
+				if (num == 1024){
+					const result = await send_solve("1024");
 					feedbackEl.textContent = 'You did it! Great job!';
 					feedbackEl.style.color = 'green';
 				}
@@ -290,7 +290,7 @@
 	<h1>2048</h1>
 	<hr>
 	<h2>Score: <span id="score">0</span></h2>
-	<h2>The goal is {{QUESTION}}</h2>
+	<h2>The goal is 1024</h2>
 	<div id="board">
 	</div>
 	<p id="feedback"></p>
