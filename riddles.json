@@ -19,7 +19,7 @@
     "id": "lwuh2397h23r29",
     "name": "3. Dezember",
     "description": "Ein kleines Schach Raetsel",
-    "solution": "re8#",
+    "solution": "Re1#",
     "type": "chess",
     "day": 3
   },
@@ -75,7 +75,7 @@
     "id": "fwi4lhr38sdf",
     "name": "10. Dezember",
     "description": "Ein etwas schwereres Schachproblem ...",
-    "solution": "Qe7+Kg8Qe8+Re8Re8#",
+    "solution": "Qd1+Qe1Qxe1#",
     "type": "chess",
     "day": 10
   },
@@ -179,7 +179,7 @@
     "id": "kjgsdkfhgmn3b",
     "name": "23. Dezember",
     "description": "chess hard",
-    "solution": "",
+    "solution": "Qe7+Kg8Qe8+Rxe8Rxe8#",
     "type": "chess",
     "day": 23
   },
