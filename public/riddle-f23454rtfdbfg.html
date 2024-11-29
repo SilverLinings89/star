@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WORDLE</title>
+	<link rel="stylesheet" href="styles.css">
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -15,7 +16,6 @@
 			justify-content: center;
 			height: 100vh;
 			background: #1b3d23 url('https://www.transparenttextures.com/patterns/grey-sandbag.png');
-			/* Subtle snowy texture */
 			color: #fff;
 			margin: 0;
 		}
@@ -126,21 +126,29 @@
 		.key.absent {
 			background-color: #5e5e5f;
 		}
+
+		#feedback {
+			color: #d32f2f;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="game-container">
-		<h1>{{QUESTION}}</h1>
+	<video autoplay muted loop id="myVideo">
+		<source src="bg.mp4" type="video/mp4">
+	</video>
+	<div class="container">
+		<h1>Deutsches WORDLE! WHEEEE</h1>
 		<div id="grid"></div>
 		<input type="text" id="guessInput" maxlength="6" placeholder="Enter a 6-letter word">
 		<button onclick="makeGuess()">Submit</button>
-		<div id="message" class="message"></div>
+		<div id="feedback"></div>
 		<div id="keyboard" class="keyboard"></div>
+		<a href="index.html" class="back-link">Back to Main Page</a>
 	</div>
 
 	<script>
-		const solution = "apples";
+		const solution = "advent";
 		const maxAttempts = 6;
 		let attempts = 0;
 
@@ -157,7 +165,7 @@
 		for (let i = 0; i < maxAttempts; i++) {
 			const row = document.createElement('div');
 			row.className = 'row';
-			for (let j = 0; j < 5; j++) {
+			for (let j = 0; j < 6; j++) {
 				const cell = document.createElement('div');
 				cell.className = 'cell';
 				cell.id = `cell-${i}-${j}`;
@@ -174,7 +182,7 @@
 			keyboard.appendChild(key);
 		});
 
-		function makeGuess() {
+		async function makeGuess() {
 			const guessInput = document.getElementById('guessInput');
 			const guess = guessInput.value.toLowerCase();
 
@@ -188,7 +196,7 @@
 				return;
 			}
 
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 6; i++) {
 				const cell = document.getElementById(`cell-${attempts}-${i}`);
 				const letter = guess[i];
 				cell.textContent = letter;
@@ -209,6 +217,7 @@
 
 			if (guess === solution) {
 				showMessage("Congratulations! You guessed the word!");
+				await send_solve(solution);
 				disableInput();
 			} else {
 				attempts++;
@@ -224,7 +233,7 @@
 		}
 
 		function showMessage(msg) {
-			const messageElement = document.getElementById('message');
+			const messageElement = document.getElementById('feedback');
 			messageElement.textContent = msg;
 		}
 

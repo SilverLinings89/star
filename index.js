@@ -127,7 +127,7 @@ app.get('/riddle/:dayId', (req, res) => {
 	}
 	console.log('id: ' + id);
 
-	if (status[day] && status[day].status === "available") {
+	if (status[day] && (status[day].status === "available" || status[day].status === "done")) {
 		console.log('redirecting to: ' + `riddle-${id}.html`);
 		res.redirect(`/riddle-${id}.html`);
 	//res.sendFile(__dirname + `/public/riddle-${id}.html`);

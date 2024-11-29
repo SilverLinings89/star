@@ -51,7 +51,7 @@
     "id": "owi4jt0whe",
     "name": "7. Dezember",
     "description": "2048",
-    "solution": "2048",
+    "solution": "1024",
     "type": "2048",
     "day": 7
   },
@@ -82,8 +82,8 @@
   {
     "id": "f43f4ilu34hf7",
     "name": "11. Dezember",
-    "description": "4096",
-    "solution": "4096",
+    "description": "2048",
+    "solution": "2048",
     "type": "2048",
     "day": 11
   },
@@ -154,8 +154,8 @@
   {
     "id": "f24asasd23wdcsd",
     "name": "20. Dezember",
-    "description": "8192",
-    "solution": "8192",
+    "description": "4096",
+    "solution": "4096",
     "type": "2048",
     "day": 20
   },

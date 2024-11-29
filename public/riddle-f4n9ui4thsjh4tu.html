@@ -6,20 +6,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WORDLE</title>
+	<link rel="stylesheet" href="styles.css">
 	<style>
-		body {
-			font-family: Arial, sans-serif;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			height: 100vh;
-			background: #1b3d23 url('https://www.transparenttextures.com/patterns/grey-sandbag.png');
-			/* Subtle snowy texture */
-			color: #fff;
-			margin: 0;
-		}
-
+		
 		.game-container {
 			text-align: center;
 		}
@@ -126,17 +115,25 @@
 		.key.absent {
 			background-color: #5e5e5f;
 		}
+
+		#feedback {
+			color: #d32f2f;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="game-container">
+	<video autoplay muted loop id="myVideo">
+		<source src="bg.mp4" type="video/mp4">
+	</video>
+	<div class="container">
 		<h1>Ein deutsches Wordle!</h1>
 		<div id="grid"></div>
 		<input type="text" id="guessInput" maxlength="6" placeholder="Enter a 6-letter word">
 		<button onclick="makeGuess()">Submit</button>
-		<div id="message" class="message"></div>
+		<div id="feedback"></div>
 		<div id="keyboard" class="keyboard"></div>
+		<a href="index.html" class="back-link">Back to Main Page</a>
 	</div>
 
 	<script>
@@ -210,27 +207,7 @@
 
 			if (guess === solution) {
 				showMessage("Congratulations! You guessed the word!");
-				const payload = {
-					id: riddleId,
-					solution: solution
-				};
-					const response = await fetch('/api/solution', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(payload)
-					});
-
-					const result = await response.json();
-
-					if (result) {
-						feedbackEl.textContent = 'Correct! Great job!';
-						feedbackEl.style.color = 'green';
-					} else {
-						feedbackEl.textContent = 'Incorrect. Try again!';
-						feedbackEl.style.color = 'red';
-					}
+				await send_solve(solution);
 				disableInput();
 			} else {
 				attempts++;
@@ -246,7 +223,7 @@
 		}
 
 		function showMessage(msg) {
-			const messageElement = document.getElementById('message');
+			const messageElement = document.getElementById('feedback');
 			messageElement.textContent = msg;
 		}
 

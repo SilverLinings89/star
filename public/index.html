@@ -52,7 +52,7 @@
 			background-color: #ffc107;
 		}
 
-		.solved {
+		.done {
 			background-color: #28a745;
 		}
 	</style>
@@ -60,7 +60,7 @@
 
 <body>
 	<div class="calendar-container">
-		<h1>🎄 Adventskalender f&uuml;r meinen Schatz 🎄</h1>
+		<h1>🎄 Hannas Adventskalender 🎄</h1>
 		<div class="grid-container">
 			<div id="day-1" class="day-box locked" data-day="1">1</div>
 			<div id="day-2" class="day-box locked" data-day="2">2</div>
@@ -87,13 +87,18 @@
 			<div id="day-23" class="day-box locked" data-day="23">23</div>
 			<div id="day-24" class="day-box locked" data-day="24">24</div>
 		</div>
+		<div>
+			<img style="padding-top: 50px" src="/1.webp" />
+		</div>
 	</div>
 	<script>
 		document.addEventListener("DOMContentLoaded", async () => {
 			const calendar = document.querySelectorAll(".day-box");
-
+			const img = document.querySelector("img");
+			const random = Math.floor(Math.random() * 20) + 1;
+			img.src = "/" + random + ".webp";
 			const response = await fetch('/api/riddle-status');
-			const riddleStatus = await response.json(); // { "1": "available", "2": "solved", etc. }
+			const riddleStatus = await response.json();
 
 			calendar.forEach(dayBox => {
 				const day = dayBox.getAttribute("data-day");
@@ -105,6 +110,7 @@
 					dayBox.classList.remove("locked");
 					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
 				} else if (status === "done") {
+					dayBox.classList.remove("locked");
 					dayBox.classList.add("done");
 					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
 				}
