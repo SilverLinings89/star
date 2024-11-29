@@ -92,24 +92,20 @@
 		document.addEventListener("DOMContentLoaded", async () => {
 			const calendar = document.querySelectorAll(".day-box");
 
-			// Fetch the riddle status from the server
 			const response = await fetch('/api/riddle-status');
 			const riddleStatus = await response.json(); // { "1": "available", "2": "solved", etc. }
 
-			// Iterate through each day and apply the correct class based on its status
 			calendar.forEach(dayBox => {
 				const day = dayBox.getAttribute("data-day");
-
-				if (riddleStatus[day] === "locked") {
+				console.log(day, riddleStatus[day]);
+				const status = riddleStatus[day].status;
+				if (status === "locked") {
 					dayBox.classList.add("locked");
-				} else if (riddleStatus[day] === "available") {
+				} else if (status == "available") {
 					dayBox.classList.remove("locked");
 					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
-				} else if (riddleStatus[day] === "attempted") {
-					dayBox.classList.add("attempted");
-					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
-				} else if (riddleStatus[day] === "solved") {
-					dayBox.classList.add("solved");
+				} else if (status === "done") {
+					dayBox.classList.add("done");
 					dayBox.addEventListener("click", () => window.location.href = `/riddle/${day}`);
 				}
 			});

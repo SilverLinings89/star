@@ -8,6 +8,7 @@ const cron = require('node-cron');
 const { Gpio } = require("rpi-ws281x-native");
 const PORT = 4200;
 
+/***
 const NUM_LEDS = 144;
 const LED_PIN = 18;
 const leds = new Uint32Array(NUM_LEDS);
@@ -38,6 +39,7 @@ function updateLeds() {
 
 	ws281x.render(leds);
 }
+	*/
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -53,7 +55,7 @@ const loadRiddles = () => {
 };
 
 const saveRiddleStatus = (status) => {
-	updateLeds();
+	//updateLeds();
 	fs.writeFileSync('riddleStatus.json', JSON.stringify(status), 'utf-8');
 };
 
@@ -69,7 +71,7 @@ const unlockDailyRiddles = () => {
 	const today = new Date();
 	const day = today.getDate();
 	const status = loadRiddleStatus();
-	if (today.getMonth() === 11 && day <= 24) {
+	if (today.getMonth() === 10 && day <= 24) {
 		for (let i = 1; i <= day; i++) {
 			const day = i.toString();
 			if (status[day].status === "locked") {
@@ -86,7 +88,7 @@ app.get('/api/riddle-status', (_, res) => {
 	const today = new Date().getDate();
 	const filteredStatus = Object.keys(status).reduce((result, day) => {
 		if (parseInt(day) <= today && status[day].status === "available") {
-			result[day] = { status: "available", url: status[day].url };
+			result[day] = { status: "available" };
 		} else {
 			result[day] = { status: status[day].status };
 		}
@@ -103,7 +105,7 @@ app.post('/api/solution', (req, res) => {
 	const solution = body.solution;
 	const riddles = loadRiddles();
 	let success = false;
-	for (let r in riddles) {
+	for (let r of riddles) {
 		if (r.id == id && r.solution == solution) {
 			success = true;
 			solve_riddle(r.day);
@@ -113,18 +115,30 @@ app.post('/api/solution', (req, res) => {
 });
 
 app.get('/riddle/:dayId', (req, res) => {
-	const [day, uniqueId] = req.params.dayId.split('-');
+	const day = parseInt(req.params.dayId);
+	console.log('day: ' + day);	
 	const status = loadRiddleStatus();
+	const riddles = loadRiddles();
+	console.log('status: ' + status[day].status);
+	var id = "";
+	for (let r of riddles) {
+		if (r.day == day) {
+			id = r.id;
+		}
+	}
+	console.log('id: ' + id);
 
-	if (status[day] && status[day].status === "available" && status[day].url.endsWith(uniqueId)) {
-		res.sendFile(__dirname + `/public/riddles/riddle${day}.html`);
+	if (status[day] && status[day].status === "available") {
+		console.log('redirecting to: ' + `riddle-${id}.html`);
+		res.redirect(`/riddle-${id}.html`);
+	//res.sendFile(__dirname + `/public/riddle-${id}.html`);
 	} else {
 		res.redirect('/');
 	}
 });
 
 cron.schedule('* * * * * *', () => {
-	updateLeds();
+	// updateLeds();
 });
 
 app.listen(PORT, () => {

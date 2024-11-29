@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
+	<script type="text/javascript" src="/public/solve.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="/public/solve.js"></script>
 	<title>Riddle</title>
 	<style>
 		body {
@@ -85,7 +87,7 @@
 <body>
 	<div class="container">
 		<h1>Riddle</h1>
-		<p id="question">{{QUESTION}}</p>
+		<p id="question">The difficult riddles are starting now: The solution is an 8 letter word. You can remove a letter in such a way that the remaining 7 are still a word. You can repeat this until only one letter remains. Example: SING - SIN - IN - I.</p>
 		<input type="text" id="answer" placeholder="Enter your answer here">
 		<button id="submit">Submit Answer</button>
 		<p id="feedback"></p>
@@ -93,50 +95,29 @@
 	</div>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-			const riddleId = window.location.pathname.split('-')[1].split('.')[0];
+		
 
+		document.addEventListener('DOMContentLoaded', () => {
 			const feedbackEl = document.getElementById('feedback');
 			const submitButton = document.getElementById('submit');
 			const answerInput = document.getElementById('answer');
-
 			submitButton.addEventListener('click', async () => {
 				const userAnswer = answerInput.value.trim();
-
 				if (!userAnswer) {
 					feedbackEl.textContent = 'Please enter an answer.';
 					feedbackEl.style.color = 'red';
 					return;
 				}
+				const result = send_solve(userAnswer);
 
-				const payload = {
-					id: riddleId,
-					solution: userAnswer
-				};
-
-				try {
-					const response = await fetch('/api/solution', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(payload)
-					});
-
-					const result = await response.json();
-
-					if (result.success) {
-						feedbackEl.textContent = 'Correct! Great job!';
-						feedbackEl.style.color = 'green';
-					} else {
-						feedbackEl.textContent = 'Incorrect. Try again!';
-						feedbackEl.style.color = 'red';
-					}
-				} catch (error) {
-					feedbackEl.textContent = 'Error communicating with the server.';
+				if (result.success) {
+					feedbackEl.textContent = 'Correct! Great job!';
+					feedbackEl.style.color = 'green';
+				} else {
+					feedbackEl.textContent = 'Incorrect. Try again!';
 					feedbackEl.style.color = 'red';
 				}
-			});
+			});	
 		});
 	</script>
 </body>

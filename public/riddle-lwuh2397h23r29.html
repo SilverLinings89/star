@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+	<script type="text/javascript" src="/public/solve.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Riddle</title>
@@ -85,7 +86,7 @@
 <body>
 	<div class="container">
 		<h1>Riddle</h1>
-		<p id="question">What has to be broken before you can use it?</p>
+		<p id="question">Ein kleines Schach R&auml;tsel:</p>
 		<input type="text" id="answer" placeholder="Enter your answer here">
 		<button id="submit">Submit Answer</button>
 		<p id="feedback"></p>
@@ -94,52 +95,23 @@
 
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-			// Extract the riddle ID from the URL
-			const riddleId = window.location.pathname.split('-')[1].split('.')[0];
-
-			// Reference to the elements
 			const feedbackEl = document.getElementById('feedback');
 			const submitButton = document.getElementById('submit');
 			const answerInput = document.getElementById('answer');
-
-			// Event listener for the submit button
 			submitButton.addEventListener('click', async () => {
 				const userAnswer = answerInput.value.trim();
-
+				
 				if (!userAnswer) {
 					feedbackEl.textContent = 'Please enter an answer.';
 					feedbackEl.style.color = 'red';
 					return;
 				}
-
-				// Prepare the payload
-				const payload = {
-					id: riddleId,
-					solution: userAnswer
-				};
-
-				try {
-					// Send POST request to the server
-					const response = await fetch('/api/solution', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(payload)
-					});
-
-					// Parse the response
-					const result = await response.json();
-
-					if (result.success) {
-						feedbackEl.textContent = 'Correct! Great job!';
-						feedbackEl.style.color = 'green';
-					} else {
-						feedbackEl.textContent = 'Incorrect. Try again!';
-						feedbackEl.style.color = 'red';
-					}
-				} catch (error) {
-					feedbackEl.textContent = 'Error communicating with the server.';
+				const result = send_solve(userAnswer);
+				if (result) {
+					feedbackEl.textContent = 'Correct! Great job!';
+					feedbackEl.style.color = 'green';
+				} else {
+					feedbackEl.textContent = 'Incorrect. Try again!';
 					feedbackEl.style.color = 'red';
 				}
 			});
