@@ -22,7 +22,7 @@ async function send_solve(solution) {
         });
 
         const result = await response.json();
-
+        console.log(result);
         if (result.success) {
             return true;
         } else {

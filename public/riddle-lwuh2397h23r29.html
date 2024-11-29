@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<script type="text/javascript" src="/public/solve.js"></script>
+	<script type="text/javascript" src="solve.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Riddle</title>
@@ -32,6 +32,11 @@
 			margin-bottom: 10px;
 			font-size: 24px;
 			color: #333;
+		}
+
+		img {
+			width: 100%;
+			margin-bottom: 20px;
 		}
 
 		p {
@@ -87,8 +92,8 @@
 	<div class="container">
 		<h1>Schach</h1>
 		<p id="question">Ein kleines Schach R&auml;tsel:</p>
-		<p id="">Schwarz am Zug. Gelbe Felder markieren den letzten Zug von Wei&szlig;. Notiere den Rest des Spiels. Zur Notation: Man schreibt zuerst den Namen der Figur (K - K&ouml;nig, Q - Dame, N - Springer, B - L&auml;R - Turm; nichts f&uuml;r Bauern). Dann ein x falls die Figur eine andere schl&auml;gt. Dann die Koordinaten des Zielfeldes. Dann falls die Figur ein Schach gibt ein + und falls es Schachmatt ist (statt dem +) ein #. Keine Trennzeichen oder sonstige.</p>
-		<img src="/public/chess-easy.png" alt="Chess Board">
+		<p id="">Schwarz am Zug. <br /> Gelbe Felder markieren den letzten Zug von Wei&szlig;.<br /> <b>Notiere den Rest des Spiels.</b><br /><br />Zur Notation: Man schreibt zuerst den Namen der Figur (K - K&ouml;nig, Q - Dame, N - Springer, B - L&auml;ufer, R - Turm; nichts f&uuml;r Bauern). Dann ein x falls die Figur eine andere schl&auml;gt. Dann die Koordinaten des Zielfeldes. Dann falls die Figur ein Schach gibt ein + und falls es Schachmatt ist (statt dem +) ein #. Keine Trennzeichen oder sonstige.</p>
+		<img src="/chess-easy.png" alt="Chess Board">
 		<input type="text" id="answer" placeholder="Enter your answer here">
 		<button id="submit">Submit Answer</button>
 		<p id="feedback"></p>
@@ -108,7 +113,7 @@
 					feedbackEl.style.color = 'red';
 					return;
 				}
-				const result = send_solve(userAnswer);
+				const result = await send_solve(userAnswer);
 				if (result) {
 					feedbackEl.textContent = 'Correct! Great job!';
 					feedbackEl.style.color = 'green';

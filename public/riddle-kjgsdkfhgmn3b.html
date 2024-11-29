@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<script type="text/javascript" src="/public/solve.js"></script>
+	<script type="text/javascript" src="solve.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Riddle</title>
@@ -108,7 +108,7 @@
 					feedbackEl.style.color = 'red';
 					return;
 				}
-				const result = send_solve(userAnswer);
+				const result = await send_solve(userAnswer);
 				if (result) {
 					feedbackEl.textContent = 'Correct! Great job!';
 					feedbackEl.style.color = 'green';

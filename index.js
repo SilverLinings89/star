@@ -55,7 +55,6 @@ const loadRiddles = () => {
 };
 
 const saveRiddleStatus = (status) => {
-	//updateLeds();
 	fs.writeFileSync('riddleStatus.json', JSON.stringify(status), 'utf-8');
 };
 
