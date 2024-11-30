@@ -6,7 +6,7 @@ const cron = require('node-cron');
 // Valid states for a riddle: locked, available, done
 
 const { Gpio } = require("rpi-ws281x-native");
-const PORT = 4200;
+const PORT = 80;
 
 /***
 const NUM_LEDS = 144;
