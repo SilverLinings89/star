@@ -70,7 +70,7 @@ const unlockDailyRiddles = () => {
 	const today = new Date();
 	const day = today.getDate();
 	const status = loadRiddleStatus();
-	if (today.getMonth() === 10 && day <= 24) {
+	if (today.getMonth() === 11 && day <= 24) {
 		for (let i = 1; i <= day; i++) {
 			const day = i.toString();
 			if (status[day].status === "locked") {
@@ -115,7 +115,7 @@ app.post('/api/solution', (req, res) => {
 
 app.get('/riddle/:dayId', (req, res) => {
 	const day = parseInt(req.params.dayId);
-	console.log('day: ' + day);	
+	console.log('day: ' + day);
 	const status = loadRiddleStatus();
 	const riddles = loadRiddles();
 	console.log('status: ' + status[day].status);
@@ -130,7 +130,7 @@ app.get('/riddle/:dayId', (req, res) => {
 	if (status[day] && (status[day].status === "available" || status[day].status === "done")) {
 		console.log('redirecting to: ' + `riddle-${id}.html`);
 		res.redirect(`/riddle-${id}.html`);
-	//res.sendFile(__dirname + `/public/riddle-${id}.html`);
+		//res.sendFile(__dirname + `/public/riddle-${id}.html`);
 	} else {
 		res.redirect('/');
 	}
