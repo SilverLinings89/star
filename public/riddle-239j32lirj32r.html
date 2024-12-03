@@ -14,8 +14,8 @@
 		<source src="bg.mp4" type="video/mp4">
 	</video>
 	<div class="container">
-		<h1>Riddle</h1>
-		<p id="question">What has to be broken before you can use it?</p>
+		<h1>Ein Kreuzworträtsel</h1>
+		<img style="width: 100%" src="/crossword_1.png" alt="Chess Board">
 		<input type="text" id="answer" placeholder="Enter your answer here">
 		<button id="submit">Submit Answer</button>
 		<p id="feedback"></p>
@@ -35,7 +35,7 @@
 					feedbackEl.style.color = 'red';
 					return;
 				}
-				const result = await send_solve(userAnswer);
+				const result = await send_solve(userAnswer.toLowerCase());
 				if (result) {
 					feedbackEl.textContent = 'Correct! Great job!';
 					feedbackEl.style.color = 'green';
@@ -47,5 +47,4 @@
 		});
 	</script>
 </body>
-
 </html>
