@@ -54,23 +54,30 @@
 			}
 		}
 
-		document.addEventListener('keyup', (e) => {
+		document.addEventListener('keyup', async (e) => {
 			if (e.code == "ArrowLeft") {
-				slideLeft();
-				setTwo();
+				let ret = await slideLeft();
+				if(ret) {
+					setTwo();
+				}
 			}
 			else if (e.code == "ArrowRight") {
-				slideRight();
-				setTwo();
+				let ret = await slideRight();
+				if (ret) {
+					setTwo();
+				}
 			}
 			else if (e.code == "ArrowUp") {
-				slideUp();
-				setTwo();
-
+				let ret = await slideUp();
+				if (ret) {
+					setTwo();
+				}
 			}
 			else if (e.code == "ArrowDown") {
-				slideDown();
-				setTwo();
+				let ret = await slideDown();
+				if(ret) {
+					setTwo();
+				}
 			}
 			document.getElementById("score").innerText = score;
 		})
@@ -94,60 +101,95 @@
 			}
 			return row;
 		}
-
-		async function slideLeft() {
-			for (let r = 0; r < rows; r++) {
-				let row = board[r];
-				row = slide(row);
-				board[r] = row;
-				for (let c = 0; c < columns; c++) {
-					let tile = document.getElementById(r.toString() + "-" + c.toString());
-					let num = board[r][c];
-					await updateTile(tile, num);
+		
+		function arrays_equal(a,b) {
+			let ret = true;
+			for(let i = 0; i < 4; i++) {
+				if(a[i] != b[i]) {
+					ret = false;
 				}
 			}
+			return ret;
+		}
+
+		async function slideLeft() {
+			let has_occured = false;
+			for (let r = 0; r < rows; r++) {
+				let row = board[r];
+				let update = slide(row);
+				if (!arrays_equal(row, update)) {		
+					board[r] = update;
+					for (let c = 0; c < columns; c++) {
+						let tile = document.getElementById(r.toString() + "-" + c.toString());
+						let num = board[r][c];
+						await updateTile(tile, num);
+					}
+					has_occured = true;
+				}
+			}
+			return has_occured;
 		}
 
 		async function slideRight() {
+			let has_occured = false;
 			for (let r = 0; r < rows; r++) {
 				let row = board[r];
 				row.reverse(); 
-				row = slide(row);
-				board[r] = row.reverse(); 
-				for (let c = 0; c < columns; c++) {
-					let tile = document.getElementById(r.toString() + "-" + c.toString());
-					let num = board[r][c];
-					await updateTile(tile, num);
+
+				let update = slide(row);
+				if (!arrays_equal(row, update)) {	
+
+					row = update;
+					board[r] = row.reverse(); 
+					for (let c = 0; c < columns; c++) {
+						let tile = document.getElementById(r.toString() + "-" + c.toString());
+						let num = board[r][c];
+						await updateTile(tile, num);
+					}
+					has_occured = true;
 				}
 			}
+			return has_occured;
 		}
 
 		async function slideUp() {
+			let has_occured = false;
 			for (let c = 0; c < columns; c++) {
 				let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
-				row = slide(row);
-				for (let r = 0; r < rows; r++) {
-					board[r][c] = row[r];
-					let tile = document.getElementById(r.toString() + "-" + c.toString());
-					let num = board[r][c];
-					await updateTile(tile, num);
+				let update = slide(row);
+				if (!arrays_equal(row, update)) {	
+					row = update;
+					for (let r = 0; r < rows; r++) {
+						board[r][c] = row[r];
+						let tile = document.getElementById(r.toString() + "-" + c.toString());
+						let num = board[r][c];
+						await updateTile(tile, num);
+					}
+					has_occured = true;
 				}
 			}
+			return has_occured;
 		}
 
 		async function slideDown() {
+			let has_occured = false;
 			for (let c = 0; c < columns; c++) {
 				let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
 				row.reverse();
-				row = slide(row);
-				row.reverse();
-				for (let r = 0; r < rows; r++) {
-					board[r][c] = row[r];
-					let tile = document.getElementById(r.toString() + "-" + c.toString());
-					let num = board[r][c];
-					await updateTile(tile, num);
+				let update = slide(row);
+				if (!arrays_equal(row, update)) {	
+					row = update;
+					row.reverse();
+					for (let r = 0; r < rows; r++) {
+						board[r][c] = row[r];
+						let tile = document.getElementById(r.toString() + "-" + c.toString());
+						let num = board[r][c];
+						await updateTile(tile, num);
+					}
+					has_occured = true;
 				}
 			}
+			return has_occured;
 		}
 
 		function setTwo() {
@@ -181,9 +223,14 @@
 		}
 	</script>
 	<style>
+		html {
+			overscroll-behavior-y: contain;
+		}
+
 		body {
 			font-family: Arial, Helvetica, sans-serif;
 			text-align: center;
+			overscroll-behavior-y: contain;
 		}
 
 		hr {
@@ -291,13 +338,15 @@
 	<video autoplay muted loop id="myVideo">
 		<source src="bg.mp4" type="video/mp4">
 	</video>
-	<h1>2048</h1>
-	<hr>
-	<h2>Score: <span id="score">0</span></h2>
-	<h2>The goal is 4096</h2>
-	<div id="board">
+	<div class="container">
+		<h1>2048</h1>
+		<hr>
+		<h2>Score: <span id="score">0</span></h2>
+		<h2>The goal is 4096</h2>
+		<div id="board">
+		</div>
+		<p id="feedback"></p>
 	</div>
-	<p id="feedback"></p>
 </body>
 
 </html>
