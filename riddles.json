@@ -90,7 +90,7 @@
   {
     "id": "ff3434lklp09ik",
     "name": "12. Dezember",
-    "description": "Sudoku easy",
+    "description": "Sudoku Easy",
     "solution": "172964385854173629693825741385416297246759138719382456427591863531648972968237514",
     "type": "sudoku",
     "day": 12
@@ -130,8 +130,8 @@
   {
     "id": "qewarestqwx365",
     "name": "17. Dezember",
-    "description": "Sudoku medium",
-    "solution": "532169487684357129917284536458693712176842395293571864741936258365428971829715643",
+    "description": "Sudoku Medium",
+    "solution": "687534921512897364394261875253789146176423598948156237865342719431975682729618453",
     "type": "sudoku",
     "day": 17
   },
@@ -146,9 +146,9 @@
   {
     "id": "23lkfiug23r78ogu",
     "name": "19. Dezember",
-    "description": "crossword",
-    "solution": "",
-    "type": "crossword",
+    "description": "Sudoku Hard",
+    "solution": "518493267492657831763821945924738516386215479157946328275184693841369752639572184",
+    "type": "sudoku",
     "day": 19
   },
   {
@@ -162,8 +162,8 @@
   {
     "id": "poiujhnk90987yt",
     "name": "21. Dezember",
-    "description": "Sudoku hard",
-    "solution": "789264153362159784514837296251698437496713825873542961148325679937486512625971348",
+    "description": "Sudoku Export",
+    "solution": "428715963657923148913486275186257394534869712792134586271548639349672851865391427",
     "type": "sudoku",
     "day": 21
   },
