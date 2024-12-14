@@ -1,8 +1,8 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="styles.css">
 	<script type="text/javascript" src="solve.js"></script>
+	<link rel="stylesheet" href="styles.css">
 	<script>
 		var board;
 		var score = 0;
@@ -45,17 +45,12 @@
 
 		}
 
-		async function updateTile(tile, num) {
+		function updateTile(tile, num) {
 			tile.innerText = "";
 			tile.classList.value = "";
 			tile.classList.add("tile");
 			if (num > 0) {
 				tile.innerText = num.toString();
-				if (num == 1024){
-					const result = await send_solve("1024");
-					feedbackEl.textContent = 'You did it! Great job!';
-					feedbackEl.style.color = 'green';
-				}
 				tile.classList.add("x" + num.toString());
 			}
 		}
@@ -82,8 +77,8 @@
 			document.getElementById("score").innerText = score;
 			for (let r = 0; r < rows; r++) {
 				for (let c = 0; c < columns; c++) {
-					if (board[r][c] == 2048) {
-						const result = await send_solve("2048");
+					if (board[r][c] == 1024) {
+						const result = await send_solve("1024");
 						feedbackEl.textContent = 'You did it! Great job!';
 						feedbackEl.style.color = 'green';
 					}
@@ -235,45 +230,51 @@
 			const diffY = endY - startY;
 
 			if (Math.abs(diffX) > Math.abs(diffY)) {
-			// Horizontal Swipe
-			if (Math.abs(diffX) > threshold) {
-				if (diffX > 0) {
-					await input_handler("right");
-				} else {
-					await input_handler("left");
+				if (Math.abs(diffX) > threshold) {
+					if (diffX > 0) {
+						await input_handler("right");
+					} else {
+						await input_handler("left");
+					}
 				}
-			}
 			} else {
-			// Vertical Swipe
-			if (Math.abs(diffY) > threshold) {
-				if (diffY > 0) {
-					await input_handler("down");
-				} else {
-					await input_handler("up");
+				if (Math.abs(diffY) > threshold) {
+					if (diffY > 0) {
+						await input_handler("down");
+					} else {
+						await input_handler("up");
+					}
 				}
-			}
 			}
 		};
+		const gameBoard = document.getElementById('board');
 
-		document.addEventListener('touchstart', (e) => {
+		gameBoard.addEventListener('touchstart', (e) => {
+			event.preventDefault();
 			const touch = e.touches[0];
 			touchStartX = touch.clientX;
 			touchStartY = touch.clientY;
-		});
+		}, { passive: false });
 
-		document.addEventListener('touchend', async (e) => {
+		gameBoard.addEventListener('touchend', async (e) => {
+			event.preventDefault();
 			const touch = e.changedTouches[0];
 			touchEndX = touch.clientX;
 			touchEndY = touch.clientY;
 			await detectSwipeDirection(touchStartX, touchStartY, touchEndX, touchEndY);
-		});
+		}, { passive: false });
 	});
 
 	</script>
 	<style>
+		html {
+			overscroll-behavior-y: contain;
+		}
+
 		body {
 			font-family: Arial, Helvetica, sans-serif;
 			text-align: center;
+			overscroll-behavior-y: contain;
 		}
 
 		hr {
@@ -281,22 +282,21 @@
 		}
 
 		#board {
-			width: 400px;
-			height: 400px;
-
+			width: 90%;
+			max-width: 800px;
 			background-color: #cdc1b5;
 			border: 6px solid #bbada0;
-
+			aspect-ratio: 1;
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
 		}
 
 		.tile {
-			width: 90px;
-			height: 90px;
+			width: 25%;
+			height: 25%;
 			border: 5px solid #bbada0;
-
+			box-sizing: border-box;
 			font-size: 40px;
 			font-weight: bold;
 			display: flex;
@@ -374,6 +374,9 @@
 			font-size: 18px;
 			font-weight: bold;
 		}
+		div.container {
+			min-width: 90%;
+		}
 	</style>
 </head>
 
@@ -382,14 +385,13 @@
 		<source src="bg.mp4" type="video/mp4">
 	</video>
 	<div class="container">
-	<h1>2048</h1>
-	<br />
-	<h2>Score: <span id="score">0</span></h2>
-	<h2>The goal is 1024</h2>
-	<div id="board">
+		<h1>2048</h1>
+		<h2>Score: <span id="score">0</span></h2>
+		<h2>The goal is 2048</h2>
+		<div id="board">
+		</div>
+		<p id="feedback"></p>
 	</div>
-	<p id="feedback"></p>
-</div>
 </body>
 
 </html>
