@@ -7,6 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Riddle</title>
 	<link rel="stylesheet" href="styles.css">
+	<style>
+		p#question {
+			text-align: left;
+		}
+		span.linenumber {
+			color: #999;
+			font-size: 0.8em;
+			margin-right: 10px;
+		}
+	</style>
 </head>
 
 <body>
@@ -15,7 +25,13 @@
 	</video>
 	<div class="container">
 		<h1>Riddle</h1>
-		<p id="question">{{QUESTION}}</p>
+		<p id="question"><span class="linenumber">0</span> And thus Caesar said<br />
+			<span class="linenumber">1</span> Njdb sftut xjui spzbm hsbdf<br />
+			<span class="linenumber">2</span> C igpvng uvct kp c swkgv rnceg<br />
+			<span class="linenumber">3</span> Nuxhpho vqliiv wkh ihvwlyh ihdvw<br />
+			<span class="linenumber">4</span> Sr Glvmwxqew hec, xlic’vi fieyxc erh fiewx<br />
+			<span class="linenumber">5</span> Ymj fsxbjw nx HMWNXYRFX<br />
+		</p>
 		<input type="text" id="answer" placeholder="Enter your answer here">
 		<button id="submit">Submit Answer</button>
 		<p id="feedback"></p>

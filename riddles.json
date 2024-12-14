@@ -162,7 +162,7 @@
   {
     "id": "poiujhnk90987yt",
     "name": "21. Dezember",
-    "description": "Sudoku Export",
+    "description": "Sudoku Expert",
     "solution": "428715963657923148913486275186257394534869712792134586271548639349672851865391427",
     "type": "sudoku",
     "day": 21
@@ -187,7 +187,7 @@
     "id": "fsew47iughjk",
     "name": "24. Dezember",
     "description": "poem caesar",
-    "solution": "",
+    "solution": "christmas",
     "type": "riddle",
     "day": 24
   }

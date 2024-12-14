@@ -139,7 +139,7 @@
 		<source src="bg.mp4" type="video/mp4">
 	</video>
 	<div class="container">
-		<h1>{{QUESTION}}</h1>
+		<h1>Ein englisches Wordle</h1>
 		<div id="grid"></div>
 		<input type="text" id="guessInput" maxlength="6" placeholder="Enter a 6-letter word">
 		<button onclick="makeGuess()">Submit</button>
@@ -149,7 +149,7 @@
 	</div>
 
 	<script>
-		const solution = "apples";
+		const solution = "hearts";
 		const maxAttempts = 6;
 		let attempts = 0;
 
@@ -166,7 +166,7 @@
 		for (let i = 0; i < maxAttempts; i++) {
 			const row = document.createElement('div');
 			row.className = 'row';
-			for (let j = 0; j < 5; j++) {
+			for (let j = 0; j < 6; j++) {
 				const cell = document.createElement('div');
 				cell.className = 'cell';
 				cell.id = `cell-${i}-${j}`;
