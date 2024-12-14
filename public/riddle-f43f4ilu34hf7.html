@@ -235,38 +235,39 @@
 			const diffY = endY - startY;
 
 			if (Math.abs(diffX) > Math.abs(diffY)) {
-			// Horizontal Swipe
-			if (Math.abs(diffX) > threshold) {
-				if (diffX > 0) {
-					await input_handler("right");
-				} else {
-					await input_handler("left");
+				if (Math.abs(diffX) > threshold) {
+					if (diffX > 0) {
+						await input_handler("right");
+					} else {
+						await input_handler("left");
+					}
 				}
-			}
 			} else {
-			// Vertical Swipe
-			if (Math.abs(diffY) > threshold) {
-				if (diffY > 0) {
-					await input_handler("down");
-				} else {
-					await input_handler("up");
+				if (Math.abs(diffY) > threshold) {
+					if (diffY > 0) {
+						await input_handler("down");
+					} else {
+						await input_handler("up");
+					}
 				}
-			}
 			}
 		};
+		const gameBoard = document.getElementById('board');
 
-		document.addEventListener('touchstart', (e) => {
+		gameBoard.addEventListener('touchstart', (e) => {
+			event.preventDefault();
 			const touch = e.touches[0];
 			touchStartX = touch.clientX;
 			touchStartY = touch.clientY;
-		});
+		}, { passive: false });
 
-		document.addEventListener('touchend', async (e) => {
+		gameBoard.addEventListener('touchend', async (e) => {
+			event.preventDefault();
 			const touch = e.changedTouches[0];
 			touchEndX = touch.clientX;
 			touchEndY = touch.clientY;
 			await detectSwipeDirection(touchStartX, touchStartY, touchEndX, touchEndY);
-		});
+		}, { passive: false });
 	});
 
 	</script>
@@ -286,22 +287,21 @@
 		}
 
 		#board {
-			width: 400px;
-			height: 400px;
-
+			width: 90%;
+			max-width: 800px;
 			background-color: #cdc1b5;
 			border: 6px solid #bbada0;
-
+			aspect-ratio: 1;
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
 		}
 
 		.tile {
-			width: 90px;
-			height: 90px;
+			width: 25%;
+			height: 25%;
 			border: 5px solid #bbada0;
-
+			box-sizing: border-box;
 			font-size: 40px;
 			font-weight: bold;
 			display: flex;
@@ -378,6 +378,9 @@
 			margin-top: 15px;
 			font-size: 18px;
 			font-weight: bold;
+		}
+		div.container {
+			min-width: 90%;
 		}
 	</style>
 </head>
